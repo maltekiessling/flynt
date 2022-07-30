@@ -2,10 +2,10 @@ const path = require('path')
 const webpack = require('webpack')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const globImporter = require('node-sass-glob-importer')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const FriendlyErrorsWebpackPlugin = require('@nuxt/friendly-errors-webpack-plugin')
 const config = require('./build-config').webpack
 
 const production = process.env.NODE_ENV === 'production'
@@ -126,7 +126,7 @@ if (production) {
       cache: true,
       parallel: true
     }),
-    new OptimizeCSSAssetsPlugin({})
+    new CssMinimizerPlugin({})
   ]
 } else {
   webpackConfig.plugins.push(

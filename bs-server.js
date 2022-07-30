@@ -26,7 +26,7 @@ const browserSync = require('browser-sync').create()
 
 const crypto = require('crypto')
 const fileHashes = []
-bundler.plugin('done', function (bundles) {
+bundler.hooks.done.tap("BuildStatsPlugin", function (bundles) {
   bundles.stats.forEach(function (stats, i) {
     fileHashes[i] = fileHashes[i] || {}
     checkAssets(stats, fileHashes[i])
@@ -54,8 +54,7 @@ function checkAssets (stats, bundleHashes) {
 browserSync.init(Object.assign({
   middleware: [
     webpackDevMiddleware(bundler, Object.assign({
-      publicPath: webpackConfig[0].output.publicPath,
-      logLevel: 'silent'
+      publicPath: webpackConfig[0].output.publicPath
     }, config.webpackDevMiddleware))
   ]
 }, config.browserSync))
