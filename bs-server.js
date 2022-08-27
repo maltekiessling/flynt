@@ -27,7 +27,7 @@ const browserSync = require('browser-sync').create()
 
 const crypto = require('crypto')
 const fileHashes = []
-bundler.hooks.done.tap("BuildStatsPlugin", function (bundles) {
+bundler.hooks.done.tap('BuildStatsPlugin', function (bundles) {
   bundles.stats.forEach(function (stats, i) {
     fileHashes[i] = fileHashes[i] || {}
     checkAssets(stats, fileHashes[i])
