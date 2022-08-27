@@ -11,6 +11,7 @@
  |
  |
  */
+const fs = require('fs')
 const config = require('./build-config')
 
 const webpack = require('webpack')
@@ -38,8 +39,9 @@ function checkAssets (stats, bundleHashes) {
     const changedFiles = Object.keys(stats.compilation.assets)
       .filter(name => {
         const asset = stats.compilation.assets[name]
+        const fileBuffer = fs.readFileSync(`dist/${name}`)
         const md5Hash = crypto.createHash('md5')
-        const hash = md5Hash.update(asset.children ? asset.children[0]._value : asset.source()).digest('hex')
+        const hash = md5Hash.update(asset.children ? asset.children[0]._value : fileBuffer).digest('hex')
         if (bundleHashes[name] !== hash) {
           bundleHashes[name] = hash
           return true
